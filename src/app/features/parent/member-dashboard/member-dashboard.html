@@ -8,6 +8,7 @@
       <p class="balance">
         <strong>{{ child.currentBalance }}</strong> kudos
       </p>
+      <a class="child-link" [routerLink]="childDashboardRoute()">Open de kinderpagina</a>
     </header>
 
     <section class="card" aria-labelledby="adjustment-title">
@@ -84,7 +85,7 @@
               </span>
               <button
                 type="button"
-                (click)="fulfill(item)"
+                (click)="requestFulfillment(item)"
                 [disabled]="item.stock === 0 || fulfilling() === item.id"
               >
                 {{ item.stock === 0 ? 'Uitverkocht' : 'Vervullen' }}
@@ -96,6 +97,43 @@
         </ul>
       }
     </section>
+
+    @if (pendingItem(); as item) {
+      <section
+        class="dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirm-purchase-title"
+      >
+        <div class="dialog-card">
+          <h2 id="confirm-purchase-title">Aankoop bevestigen</h2>
+          <p>
+            {{ child.name }} krijgt <strong>{{ item.description }}</strong> voor
+            {{ item.cost }} kudos. Het saldo wordt daarna aangepast.
+          </p>
+          @if (item.stock !== null) {
+            <p>Er blijven {{ item.stock - 1 }} op voorraad.</p>
+          }
+          <div class="dialog-actions">
+            <button
+              type="button"
+              class="secondary"
+              (click)="cancelFulfillment()"
+              [disabled]="fulfilling() === item.id"
+            >
+              Annuleren
+            </button>
+            <button
+              type="button"
+              (click)="confirmFulfillment()"
+              [disabled]="fulfilling() === item.id"
+            >
+              {{ fulfilling() === item.id ? 'Bezig...' : 'Aankoop vervullen' }}
+            </button>
+          </div>
+        </div>
+      </section>
+    }
   } @else {
     <p>Kind wordt geladen...</p>
   }

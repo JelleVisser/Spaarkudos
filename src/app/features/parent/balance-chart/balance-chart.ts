@@ -1,6 +1,10 @@
 import { Component, ElementRef, afterRenderEffect, input, viewChild } from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
-import { ITransaction } from '../../../core/transactions/transaction';
+
+export interface BalanceChartTransaction {
+  amount: number;
+  createdAt: { toDate(): Date } | string | null;
+}
 
 Chart.register(...registerables);
 
@@ -10,7 +14,7 @@ Chart.register(...registerables);
   templateUrl: './balance-chart.html',
 })
 export class BalanceChart {
-  readonly transactions = input.required<ITransaction[]>();
+  readonly transactions = input.required<BalanceChartTransaction[]>();
   private readonly canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('canvas');
 
   constructor() {
@@ -24,7 +28,7 @@ export class BalanceChart {
     });
   }
 
-  private configuration(transactions: ITransaction[]): ChartConfiguration<'line'> {
+  private configuration(transactions: BalanceChartTransaction[]): ChartConfiguration<'line'> {
     let balance = 0;
     const labels = transactions.map((transaction) => this.formatDate(transaction.createdAt));
     const balances = transactions.map((transaction) => {
@@ -53,11 +57,11 @@ export class BalanceChart {
     };
   }
 
-  private formatDate(timestamp: ITransaction['createdAt']): string {
-    return timestamp
-      ? new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'short' }).format(
-          timestamp.toDate(),
-        )
-      : 'Nu';
+  private formatDate(timestamp: BalanceChartTransaction['createdAt']): string {
+    if (!timestamp) {
+      return 'Nu';
+    }
+    const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp.toDate();
+    return new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'short' }).format(date);
   }
 }

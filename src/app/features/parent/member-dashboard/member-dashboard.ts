@@ -25,6 +25,7 @@ export class MemberDashboard {
   private readonly error = signal<string | null>(null);
   private readonly savingAdjustment = signal(false);
   private readonly fulfillingItemId = signal('');
+  private readonly pendingFulfillment = signal<IShopItem | null>(null);
   private readonly fulfillmentError = signal<string | null>(null);
   private memberUnsubscribe?: () => void;
   private readonly memberId = this.route.snapshot.paramMap.get('memberId') ?? '';
@@ -50,7 +51,12 @@ export class MemberDashboard {
   protected readonly shopLoading = this.shopService.isLoading;
   protected readonly fulfillmentErrorMessage = this.fulfillmentError.asReadonly();
   protected readonly fulfilling = this.fulfillingItemId.asReadonly();
+  protected readonly pendingItem = this.pendingFulfillment.asReadonly();
   protected readonly transactionRows = computed(() => [...this.transactions()].reverse());
+  protected readonly childDashboardRoute = computed(() => {
+    const group = this.group();
+    return group ? ['/group', group.id, 'member', this.memberId] : [];
+  });
 
   constructor() {
     this.destroyRef.onDestroy(() => {
@@ -68,9 +74,24 @@ export class MemberDashboard {
     });
   }
 
-  protected async fulfill(item: IShopItem): Promise<void> {
+  protected requestFulfillment(item: IShopItem): void {
+    if (item.stock === 0 || this.fulfillingItemId()) {
+      return;
+    }
+    this.fulfillmentError.set(null);
+    this.pendingFulfillment.set(item);
+  }
+
+  protected cancelFulfillment(): void {
+    if (!this.fulfillingItemId()) {
+      this.pendingFulfillment.set(null);
+    }
+  }
+
+  protected async confirmFulfillment(): Promise<void> {
+    const item = this.pendingFulfillment();
     const group = this.group();
-    if (!group || !this.member() || item.stock === 0) {
+    if (!item || !group || !this.member() || item.stock === 0) {
       return;
     }
 
@@ -86,6 +107,7 @@ export class MemberDashboard {
       );
     } finally {
       this.fulfillingItemId.set('');
+      this.pendingFulfillment.set(null);
     }
   }
 

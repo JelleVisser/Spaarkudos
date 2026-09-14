@@ -1,0 +1,80 @@
+<main class="child-page">
+  @if (isLoading()) {
+    <p aria-live="polite">Jouw spaardoel wordt geladen...</p>
+  } @else if (hasError()) {
+    <section class="error-card" role="alert">
+      <h1>Deze kinderpagina bestaat niet meer</h1>
+      <p>Vraag je ouder om een nieuwe link.</p>
+    </section>
+  } @else if (data(); as dashboard) {
+    <header>
+      <p>Hoi {{ dashboard.member.name }}!</p>
+      <h1>
+        Je hebt <strong>{{ dashboard.member.currentBalance }}</strong> kudos
+      </h1>
+    </header>
+
+    <section class="card" aria-labelledby="shop-title">
+      <h2 id="shop-title">Jouw beloningen</h2>
+      <p>Kies iets leuks en vraag het daarna aan je ouder.</p>
+      <ul class="shop-list">
+        @for (item of dashboard.shopItems; track item.id) {
+          <li [class.locked]="dashboard.member.currentBalance < item.cost || item.stock === 0">
+            <div>
+              <strong>{{ item.description }}</strong>
+              <span>{{ item.cost }} kudos</span>
+            </div>
+            @if (dashboard.member.currentBalance < item.cost) {
+              <p>Nog {{ item.cost - dashboard.member.currentBalance }} kudos nodig</p>
+            } @else if (item.stock === 0) {
+              <p>Uitverkocht</p>
+            } @else {
+              <button type="button" (click)="celebrate(item)">Dit wil ik!</button>
+            }
+          </li>
+        } @empty {
+          <li>Er zijn nog geen beloningen.</li>
+        }
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="history-title">
+      <h2>Jouw saldoontwikkeling</h2>
+      <app-balance-chart [transactions]="dashboard.transactions" />
+    </section>
+
+    <section class="card" aria-labelledby="history-title">
+      <h2 id="history-title">Jouw geschiedenis</h2>
+      <ul class="ledger">
+        @for (transaction of transactionRows(); track transaction.id) {
+          <li>
+            <span>{{ transaction.reason }}</span>
+            <strong [class.negative]="transaction.amount < 0">
+              {{ transaction.amount > 0 ? '+' : '' }}{{ transaction.amount }} kudos
+            </strong>
+          </li>
+        } @empty {
+          <li>Nog geen kudos verdiend. Dat komt vast snel!</li>
+        }
+      </ul>
+    </section>
+
+    @if (requestedReward(); as reward) {
+      <section
+        class="dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reward-message-title"
+      >
+        <div class="dialog-card">
+          <h2 id="reward-message-title">Leuke keuze!</h2>
+          <p>
+            Vraag nu aan je ouder of je <strong>{{ reward.description }}</strong> mag krijgen.
+          </p>
+          <p>Je ouder kan de aankoop daarna voor je verwerken.</p>
+          <button type="button" (click)="closeRewardMessage()">Oké!</button>
+        </div>
+      </section>
+    }
+  }
+</main>
