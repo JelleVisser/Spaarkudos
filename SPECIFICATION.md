@@ -92,7 +92,7 @@ interface Member {
   periodicReward: {
     enabled: boolean;
     amount: number;
-    interval: "daily" | "weekly" | "monthly";
+    interval: 'daily' | 'weekly' | 'monthly';
     createdAt: FirebaseFirestore.Timestamp;
   } | null;
 }
@@ -118,7 +118,7 @@ interface Transaction {
   memberId: string;
   amount: number; // positive for rewards, negative for deductions or purchases
   reason: string;
-  type: "manual" | "periodic" | "purchase";
+  type: 'manual' | 'periodic' | 'purchase';
   createdAt: FirebaseFirestore.Timestamp;
 }
 ```

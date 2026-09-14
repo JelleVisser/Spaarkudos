@@ -2,7 +2,7 @@
 
 Spaarkudos is a mobile-first family rewards application. Parents award virtual currency (**kudos**) to their children for positive behaviour; children can track their balance and choose rewards from a family shop.
 
-> **Project status:** Initial project setup. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
+> **Project status:** Milestone 1 complete: Angular workspace and developer tooling. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
 
 ## Planned MVP
 
@@ -45,18 +45,31 @@ Each milestone pauses for review and confirmation before work continues.
 
 ## Getting started
 
-The application has not been scaffolded yet. Once the first milestone is complete, this section will contain the exact installation, emulator, test, and run commands.
+Prerequisites:
 
-Expected prerequisites:
-
-- A current Node.js LTS release compatible with Angular 22
+- Node.js 22.22.3 or newer
 - npm
-- Firebase CLI
-- A Firebase project with Authentication, Firestore, Cloud Functions, and Hosting enabled
+
+Install dependencies and start the local development server:
+
+```bash
+npm install
+npm start
+```
+
+Open `http://localhost:4200/` in a browser.
+
+Run quality checks:
+
+```bash
+npm run lint
+npm test -- --watch=false
+npm run build
+```
 
 ## Firebase configuration
 
-Real Firebase credentials are intentionally not committed. The project will provide environment placeholders and clear setup instructions for:
+Real Firebase credentials are intentionally not committed. A later milestone will provide environment placeholders and clear setup instructions for:
 
 - Creating a Firebase project
 - Enabling Google and Facebook providers
@@ -66,15 +79,7 @@ Real Firebase credentials are intentionally not committed. The project will prov
 
 ## Quality checks
 
-The completed project will provide commands for the following checks:
-
-```text
-npm run lint
-npm test
-npm run build
-```
-
-Pre-commit hooks will format staged files and run relevant lint checks. Continuous integration can be enabled through GitHub Actions once this repository is connected to GitHub.
+Pre-commit hooks format staged files and run relevant lint checks. Continuous integration can be enabled through GitHub Actions once this repository is connected to GitHub.
 
 ## Documentation
 
