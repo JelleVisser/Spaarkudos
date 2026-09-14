@@ -1,0 +1,35 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isGroupOwner(groupId) {
+      return isSignedIn()
+        && get(/databases/$(database)/documents/groups/$(groupId)).data.createdBy == request.auth.uid;
+    }
+
+    match /groups/{groupId} {
+      allow get, list: if isSignedIn() && resource.data.createdBy == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.createdBy == request.auth.uid;
+      allow update: if isSignedIn()
+        && resource.data.createdBy == request.auth.uid
+        && request.resource.data.createdBy == resource.data.createdBy;
+      allow delete: if isSignedIn() && resource.data.createdBy == request.auth.uid;
+
+      match /members/{memberId} {
+        allow read, write: if isGroupOwner(groupId);
+      }
+
+      match /shopItems/{shopItemId} {
+        allow read, write: if isGroupOwner(groupId);
+      }
+
+      match /transactions/{transactionId} {
+        allow read, write: if isGroupOwner(groupId);
+      }
+    }
+  }
+}

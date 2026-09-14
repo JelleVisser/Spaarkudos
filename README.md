@@ -2,7 +2,7 @@
 
 Spaarkudos is a mobile-first family rewards application. Parents award virtual currency (**kudos**) to their children for positive behaviour; children can track their balance and choose rewards from a family shop.
 
-> **Project status:** Milestone 1 complete: Angular workspace and developer tooling. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
+> **Project status:** Milestone 2 complete: Angular workspace, developer tooling, and Firebase foundation. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
 
 ## Planned MVP
 
@@ -69,7 +69,24 @@ npm run build
 
 ## Firebase configuration
 
-Real Firebase credentials are intentionally not committed. A later milestone will provide environment placeholders and clear setup instructions for:
+Real Firebase credentials are intentionally not committed. Production placeholders are in `src/environments/environment.ts` and `.firebaserc`; replace them only when a Firebase project has been created.
+
+The local Firebase Emulator Suite uses the safe `demo-spaarkudos` project, which cannot access live Firebase resources:
+
+```bash
+npm run emulators
+npm run test:rules
+```
+
+The second command starts Auth and Firestore emulators, runs the Firestore Security Rules tests, then stops the emulators. The Emulator Suite UI is available at `http://localhost:4000` while emulators are running.
+
+The TypeScript Cloud Functions workspace is in `functions/`. Build it with:
+
+```bash
+npm --prefix functions run build
+```
+
+A later milestone will provide the complete Firebase project setup and deployment instructions for:
 
 - Creating a Firebase project
 - Enabling Google and Facebook providers
