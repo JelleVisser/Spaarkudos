@@ -13,11 +13,19 @@ import {
 } from 'firebase/firestore';
 import { FIREBASE_FIRESTORE } from '../firebase/firebase.providers';
 
+export type PeriodicRewardInterval = 'daily' | 'weekly' | 'monthly';
+
+export interface IPeriodicReward {
+  enabled: boolean;
+  amount: number;
+  interval: PeriodicRewardInterval;
+}
+
 export interface IMember {
   id: string;
   name: string;
   currentBalance: number;
-  periodicReward: null;
+  periodicReward: IPeriodicReward | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -81,6 +89,16 @@ export class MemberService {
 
   async remove(groupId: string, memberId: string): Promise<void> {
     await deleteDoc(doc(this.firestore, 'groups', groupId, 'members', memberId));
+  }
+
+  async updatePeriodicReward(
+    groupId: string,
+    memberId: string,
+    periodicReward: IPeriodicReward | null,
+  ): Promise<void> {
+    await updateDoc(doc(this.firestore, 'groups', groupId, 'members', memberId), {
+      periodicReward: periodicReward ? { ...periodicReward, createdAt: serverTimestamp() } : null,
+    });
   }
 
   watchMember(

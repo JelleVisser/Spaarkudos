@@ -67,6 +67,23 @@ input {
   padding: 0.6rem 0.75rem;
 }
 
+select {
+  border: 1px solid #a9acc0;
+  border-radius: 0.5rem;
+  font: inherit;
+  padding: 0.6rem 0.75rem;
+}
+
+.checkbox-label {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
 button {
   background: #4c327d;
   border: 0;

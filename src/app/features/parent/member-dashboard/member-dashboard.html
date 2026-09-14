@@ -43,6 +43,33 @@
       <app-balance-chart [transactions]="transactions()" />
     </section>
 
+    <section class="card" aria-labelledby="periodic-reward-title">
+      <h2 id="periodic-reward-title">Periodieke beloning</h2>
+      <p>
+        Dagelijks om 06:00, wekelijks op maandag om 06:00, of maandelijks op de eerste dag om 06:00.
+      </p>
+      <form (submit)="savePeriodicReward(); $event.preventDefault()">
+        <label class="checkbox-label" for="periodic-enabled">
+          <input id="periodic-enabled" type="checkbox" [formField]="periodicRewardForm.enabled" />
+          Periodieke beloning inschakelen
+        </label>
+        <label for="periodic-amount">Aantal kudos</label>
+        <input id="periodic-amount" type="number" [formField]="periodicRewardForm.amount" />
+        <label for="periodic-interval">Herhaling</label>
+        <select id="periodic-interval" [formField]="periodicRewardForm.interval">
+          <option value="daily">Dagelijks</option>
+          <option value="weekly">Wekelijks</option>
+          <option value="monthly">Maandelijks</option>
+        </select>
+        @if (periodicRewardForm().errors().length) {
+          <p class="field-error" role="alert">{{ periodicRewardForm().errors()[0].message }}</p>
+        }
+        <button type="submit" [disabled]="periodicRewardForm().invalid() || savingPeriodic()">
+          Periodieke beloning opslaan
+        </button>
+      </form>
+    </section>
+
     <section class="card" aria-labelledby="ledger-title">
       <h2 id="ledger-title">Transactiegeschiedenis</h2>
       @if (transactionsLoading()) {

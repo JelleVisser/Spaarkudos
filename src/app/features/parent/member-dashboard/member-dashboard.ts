@@ -1,11 +1,22 @@
 import { Component, DestroyRef, computed, effect, inject, signal } from '@angular/core';
-import { FormField, form, submit, validate } from '@angular/forms/signals';
+import { FormField, disabled, form, submit, validate } from '@angular/forms/signals';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Group } from '../../../core/groups/group';
-import { IMember, MemberService } from '../../../core/members/member';
+import {
+  IMember,
+  IPeriodicReward,
+  MemberService,
+  PeriodicRewardInterval,
+} from '../../../core/members/member';
 import { IShopItem, ShopItemOutOfStockError, ShopService } from '../../../core/shop/shop';
 import { TransactionService } from '../../../core/transactions/transaction';
 import { BalanceChart } from '../balance-chart/balance-chart';
+
+interface IPeriodicRewardFormModel {
+  enabled: boolean;
+  amount: number;
+  interval: PeriodicRewardInterval;
+}
 
 @Component({
   imports: [BalanceChart, FormField, RouterLink],
@@ -21,9 +32,15 @@ export class MemberDashboard {
   private readonly transactionService = inject(TransactionService);
   private readonly shopService = inject(ShopService);
   private readonly adjustmentModel = signal({ amount: 0, reason: '' });
+  private readonly periodicRewardModel = signal<IPeriodicRewardFormModel>({
+    enabled: false,
+    amount: 1,
+    interval: 'weekly',
+  });
   private readonly selectedMember = signal<IMember | null>(null);
   private readonly error = signal<string | null>(null);
   private readonly savingAdjustment = signal(false);
+  private readonly savingPeriodicReward = signal(false);
   private readonly fulfillingItemId = signal('');
   private readonly pendingFulfillment = signal<IShopItem | null>(null);
   private readonly fulfillmentError = signal<string | null>(null);
@@ -40,6 +57,15 @@ export class MemberDashboard {
       value().trim().length === 0 ? { kind: 'required', message: 'Vul een reden in.' } : undefined,
     );
   });
+  protected readonly periodicRewardForm = form(this.periodicRewardModel, (schema) => {
+    validate(schema.amount, ({ value, valueOf }) =>
+      valueOf(schema.enabled) && value() <= 0
+        ? { kind: 'positive-amount', message: 'Vul een positief aantal kudos in.' }
+        : undefined,
+    );
+    disabled(schema.amount, { when: ({ valueOf }) => !valueOf(schema.enabled) });
+    disabled(schema.interval, { when: ({ valueOf }) => !valueOf(schema.enabled) });
+  });
   protected readonly group = this.groupService.group;
   protected readonly member = this.selectedMember.asReadonly();
   protected readonly transactions = this.transactionService.transactions;
@@ -47,6 +73,7 @@ export class MemberDashboard {
   protected readonly transactionError = this.transactionService.errorMessage;
   protected readonly errorMessage = this.error.asReadonly();
   protected readonly saving = this.savingAdjustment.asReadonly();
+  protected readonly savingPeriodic = this.savingPeriodicReward.asReadonly();
   protected readonly shopItems = this.shopService.items;
   protected readonly shopLoading = this.shopService.isLoading;
   protected readonly fulfillmentErrorMessage = this.fulfillmentError.asReadonly();
@@ -137,13 +164,50 @@ export class MemberDashboard {
     });
   }
 
+  protected savePeriodicReward(): void {
+    submit(this.periodicRewardForm, async () => {
+      const group = this.group();
+      const member = this.member();
+      if (!group || !member) {
+        return;
+      }
+
+      this.error.set(null);
+      this.savingPeriodicReward.set(true);
+      try {
+        const value = this.periodicRewardModel();
+        const periodicReward: IPeriodicReward | null = value.enabled
+          ? { enabled: true, amount: value.amount, interval: value.interval }
+          : null;
+        await this.memberService.updatePeriodicReward(group.id, member.id, periodicReward);
+      } catch {
+        this.error.set('De periodieke beloning kon niet worden opgeslagen. Probeer het opnieuw.');
+      } finally {
+        this.savingPeriodicReward.set(false);
+      }
+    });
+  }
+
   private watchMember(groupId: string): void {
     this.memberUnsubscribe?.();
     this.memberUnsubscribe = this.memberService.watchMember(
       groupId,
       this.memberId,
-      (member) => this.selectedMember.set(member),
+      (member) => {
+        this.selectedMember.set(member);
+        this.syncPeriodicRewardForm(member);
+      },
       () => this.error.set('Dit kind kon niet worden geladen.'),
     );
+  }
+
+  private syncPeriodicRewardForm(member: IMember | null): void {
+    const periodicReward = member?.periodicReward;
+    this.periodicRewardModel.set({
+      enabled: periodicReward?.enabled ?? false,
+      amount: periodicReward?.amount ?? 1,
+      interval: periodicReward?.interval ?? 'weekly',
+    });
+    this.periodicRewardForm().reset();
   }
 }

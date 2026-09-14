@@ -2,7 +2,7 @@
 
 Spaarkudos is a mobile-first family rewards application. Parents award virtual currency (**kudos**) to their children for positive behaviour; children can track their balance and choose rewards from a family shop.
 
-> **Project status:** Milestone 7 complete: public child dashboard, shop, and confetti interaction. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
+> **Project status:** Milestone 8 complete: scheduled rewards, tests, polish, and deployment documentation. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
 
 ## Planned MVP
 
@@ -97,13 +97,33 @@ npm --prefix functions run build
 
 To use Google sign-in outside the emulators, replace the Firebase placeholders and enable Google in the Firebase Authentication console. The first successful parent sign-in automatically creates a `Familie naam` group owned by that parent.
 
-A later milestone will provide the complete Firebase project setup and deployment instructions for:
+## Deploy to Firebase
 
-- Creating a Firebase project
-- Enabling Google authentication
-- Configuring local environment values
-- Running the Firebase Emulator Suite
-- Deploying Rules, Functions, and Hosting
+1. Create a Firebase project and enable the **Google** provider in **Authentication → Sign-in method**. Add your Hosting domain to **Authentication → Settings → Authorized domains**.
+2. Update `.firebaserc` with the Firebase project ID. Copy `src/environments/environment.local.example.ts` to the ignored `environment.local.ts`, then paste the Web App configuration from **Project settings → Your apps**.
+3. Sign in to the Firebase CLI and select the project:
+
+   ```powershell
+   npx.cmd firebase login
+   npx.cmd firebase use spaarkudos
+   ```
+
+4. Build the application and Functions:
+
+   ```powershell
+   npm.cmd run build
+   npm.cmd --prefix functions run build
+   ```
+
+5. Deploy the security rules, indexes, HTTP endpoint, scheduled reward functions, and Hosting site:
+
+   ```powershell
+   npx.cmd firebase deploy --only firestore:rules,firestore:indexes,functions,hosting
+   ```
+
+   The public child dashboard requires the `childDashboard` Function to be deployed. The three scheduled Functions run in `Europe/Amsterdam`: daily at 06:00, Monday at 06:00, and the first day of each month at 06:00. A billing-enabled Firebase project may be required for Cloud Functions and Cloud Scheduler.
+
+6. Open the Hosting URL reported by the deploy command. Sign in as a parent, create a child, then use **Open de kinderpagina** to obtain that child’s shareable URL.
 
 ## Quality checks
 
