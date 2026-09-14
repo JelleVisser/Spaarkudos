@@ -1,7 +1,7 @@
 .member-page {
-  background: #f7f7fb;
+  background: var(--spaarkudos-canvas);
   min-height: 100dvh;
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 3rem);
 }
 
 .member-page > a,
@@ -9,48 +9,49 @@ header,
 .card {
   display: block;
   margin: 0 auto;
-  max-width: 48rem;
+  max-width: 52rem;
 }
 
 .member-page > a {
-  color: #4c327d;
+  color: var(--spaarkudos-primary-strong);
   font-weight: 700;
   text-decoration: none;
 }
 
 header,
 .card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 2rem rgb(31 37 68 / 8%);
+  box-shadow: var(--spaarkudos-shadow);
   margin-top: 1.5rem;
   padding: 1.5rem;
 }
 
 .eyebrow {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
 h1,
 h2 {
-  color: #1f2544;
+  color: var(--spaarkudos-ink);
   margin: 0;
 }
 
 .balance {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
   font-size: 1.25rem;
 }
 
 .child-link {
-  color: #4c327d;
+  color: var(--spaarkudos-primary-strong);
   font-weight: 700;
 }
 
 .balance strong {
-  color: #4c327d;
+  color: var(--spaarkudos-primary-strong);
   font-size: 2rem;
 }
 
@@ -61,14 +62,14 @@ form {
 }
 
 input {
-  border: 1px solid #a9acc0;
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 0.5rem;
   font: inherit;
   padding: 0.6rem 0.75rem;
 }
 
 select {
-  border: 1px solid #a9acc0;
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 0.5rem;
   font: inherit;
   padding: 0.6rem 0.75rem;
@@ -85,7 +86,7 @@ select {
 }
 
 button {
-  background: #4c327d;
+  background: var(--spaarkudos-primary);
   border: 0;
   border-radius: 0.5rem;
   color: #fff;
@@ -99,7 +100,7 @@ button {
 
 .field-error,
 .negative {
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
 }
 
 .ledger {
@@ -109,7 +110,7 @@ button {
 }
 
 .ledger li {
-  border-top: 1px solid #e3e4ec;
+  border-top: 1px solid var(--spaarkudos-border);
   display: flex;
   justify-content: space-between;
   padding: 0.8rem 0;
@@ -120,7 +121,7 @@ button {
 }
 
 .dialog {
-  background: rgb(31 37 68 / 45%);
+  background: rgb(37 33 63 / 48%);
   display: grid;
   inset: 0;
   padding: 1rem;
@@ -129,7 +130,8 @@ button {
 }
 
 .dialog-card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1rem;
   max-width: 28rem;
   padding: 1.5rem;
@@ -142,7 +144,7 @@ button {
 }
 
 button.secondary {
-  background: #fff;
-  border: 1px solid #4c327d;
-  color: #4c327d;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-primary);
+  color: var(--spaarkudos-primary);
 }

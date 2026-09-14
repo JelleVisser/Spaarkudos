@@ -1,29 +1,30 @@
 .login-page {
   align-items: center;
-  background: linear-gradient(160deg, #f5f9ff, #fdf4ff);
+  background: linear-gradient(145deg, #f1ecff, #fdf8ed);
   display: flex;
   justify-content: center;
   min-height: 100dvh;
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 5vw, 3rem);
 }
 
 .login-card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1.5rem;
-  box-shadow: 0 1rem 3rem rgb(42 42 92 / 12%);
+  box-shadow: var(--spaarkudos-shadow);
   max-width: 28rem;
-  padding: 2rem;
+  padding: clamp(1.75rem, 6vw, 2.5rem);
   width: 100%;
 }
 
 .eyebrow {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
 h1 {
-  color: #1f2544;
+  color: var(--spaarkudos-ink);
   font-size: clamp(2rem, 8vw, 2.75rem);
   line-height: 1.05;
   margin: 0;
@@ -31,7 +32,7 @@ h1 {
 
 .intro,
 .help-text {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
   line-height: 1.5;
 }
 
@@ -45,7 +46,7 @@ h1 {
 }
 
 button {
-  background: #6b46c1;
+  background: var(--spaarkudos-primary);
   border: 0;
   border-radius: 0.75rem;
   color: #fff;
@@ -57,7 +58,7 @@ button {
 }
 
 button:hover:not(:disabled) {
-  background: #5836a5;
+  background: var(--spaarkudos-primary-strong);
 }
 
 button:disabled {
@@ -68,7 +69,7 @@ button:disabled {
 .error-message {
   background: #fff0f1;
   border-radius: 0.75rem;
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
   margin: 0 0 1rem;
   padding: 0.75rem;
 }

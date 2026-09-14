@@ -6,7 +6,7 @@ Spaarkudos is a mobile-first family rewards web application. Parents award virtu
 
 ## Technology
 
-- Frontend: Angular (latest stable version), TypeScript, WebAwesome, Chart.js, and canvas-confetti.
+- Frontend: Angular (latest stable version), TypeScript, Chart.js, and canvas-confetti.
 - Backend: Firebase Authentication, Cloud Firestore, and TypeScript Firebase Cloud Functions.
 - Authentication provider: Google OAuth.
 - All source code, database field names, comments, and architecture are in English.

@@ -1,7 +1,7 @@
 .parent-page {
-  background: #f7f7fb;
+  background: var(--spaarkudos-canvas);
   min-height: 100dvh;
-  padding: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 .page-header,
@@ -14,6 +14,8 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0;
 }
 
 .header-actions {
@@ -23,12 +25,12 @@
 }
 
 .header-actions a {
-  color: #4c327d;
+  color: var(--spaarkudos-primary-strong);
   font-weight: 700;
 }
 
 .brand {
-  color: #4c327d;
+  color: var(--spaarkudos-primary-strong);
   font-size: 1.25rem;
   font-weight: 800;
   text-decoration: none;
@@ -36,9 +38,9 @@
 
 button {
   background: transparent;
-  border: 1px solid #4c327d;
+  border: 1px solid var(--spaarkudos-primary);
   border-radius: 0.5rem;
-  color: #4c327d;
+  color: var(--spaarkudos-primary);
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -46,32 +48,41 @@ button {
 }
 
 .welcome-card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 2rem rgb(31 37 68 / 8%);
+  box-shadow: var(--spaarkudos-shadow);
   margin-top: 3rem;
-  padding: 2rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .eyebrow {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
 h1 {
-  color: #1f2544;
+  color: var(--spaarkudos-ink);
   margin: 0;
 }
 
 p {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
   line-height: 1.5;
 }
 
 .error-message {
   background: #fff0f1;
   border-radius: 0.75rem;
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
   padding: 0.75rem;
+}
+
+@media (max-width: 38rem) {
+  .page-header,
+  .header-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

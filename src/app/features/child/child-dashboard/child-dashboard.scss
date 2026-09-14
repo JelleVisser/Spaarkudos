@@ -1,32 +1,33 @@
 .child-page {
-  background: linear-gradient(160deg, #f4edff, #f7f7fb);
+  background: linear-gradient(145deg, #eee7ff, #fff8e8);
   min-height: 100dvh;
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 3rem);
 }
 
 header,
 .card,
 .error-card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1.25rem;
-  box-shadow: 0 0.5rem 2rem rgb(31 37 68 / 8%);
+  box-shadow: var(--spaarkudos-shadow);
   margin: 0 auto 1.25rem;
   max-width: 42rem;
   padding: 1.5rem;
 }
 
 header p {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
 }
 h1,
 h2 {
-  color: #1f2544;
+  color: var(--spaarkudos-ink);
 }
 h1 strong {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-size: 1.4em;
 }
 .shop-list,
@@ -38,25 +39,25 @@ h1 strong {
 .shop-list li,
 .ledger li {
   align-items: center;
-  border-top: 1px solid #e3e4ec;
+  border-top: 1px solid var(--spaarkudos-border);
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
 }
 .shop-list span {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
   display: block;
   margin-top: 0.25rem;
 }
 .shop-list p {
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
   margin: 0;
 }
 .shop-list li.locked {
   opacity: 0.55;
 }
 button {
-  background: #4c327d;
+  background: var(--spaarkudos-primary);
   border: 0;
   border-radius: 999px;
   color: #fff;
@@ -66,10 +67,10 @@ button {
   padding: 0.6rem 0.9rem;
 }
 .negative {
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
 }
 .dialog {
-  background: rgb(31 37 68 / 45%);
+  background: rgb(37 33 63 / 48%);
   display: grid;
   inset: 0;
   padding: 1rem;
@@ -77,7 +78,8 @@ button {
   position: fixed;
 }
 .dialog-card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1.25rem;
   max-width: 26rem;
   padding: 1.5rem;

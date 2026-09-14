@@ -20,7 +20,7 @@ All application UI text will be in Dutch. Source code, data fields, comments, an
 
 - Angular 22 with standalone components, Signals, and Signal Forms
 - TypeScript in strict mode
-- WebAwesome, Chart.js, and canvas-confetti
+- Chart.js and canvas-confetti
 - Firebase Authentication, Cloud Firestore, Cloud Functions, Hosting, and Emulator Suite
 - ESLint 9 with angular-eslint flat configuration
 - Prettier

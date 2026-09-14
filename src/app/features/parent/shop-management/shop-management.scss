@@ -1,7 +1,7 @@
 .shop-page {
-  background: #f7f7fb;
+  background: var(--spaarkudos-canvas);
   min-height: 100dvh;
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 3rem);
 }
 
 .shop-page > a,
@@ -9,32 +9,33 @@ header,
 .card {
   display: block;
   margin: 0 auto;
-  max-width: 48rem;
+  max-width: 52rem;
 }
 
 .shop-page > a {
-  color: #4c327d;
+  color: var(--spaarkudos-primary-strong);
   font-weight: 700;
   text-decoration: none;
 }
 
 header,
 .card {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 2rem rgb(31 37 68 / 8%);
+  box-shadow: var(--spaarkudos-shadow);
   margin-top: 1.5rem;
   padding: 1.5rem;
 }
 
 .eyebrow {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
 h1,
 h2 {
-  color: #1f2544;
+  color: var(--spaarkudos-ink);
   margin: 0;
 }
 form {
@@ -43,7 +44,7 @@ form {
   margin-top: 1rem;
 }
 input {
-  border: 1px solid #a9acc0;
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 0.5rem;
   font: inherit;
   padding: 0.6rem 0.75rem;
@@ -57,13 +58,14 @@ input {
   width: auto;
 }
 .actions {
+  align-items: center;
   display: flex;
   gap: 0.75rem;
   margin-top: 0.5rem;
 }
 button {
-  background: #4c327d;
-  border: 1px solid #4c327d;
+  background: var(--spaarkudos-primary);
+  border: 1px solid var(--spaarkudos-primary);
   border-radius: 0.5rem;
   color: #fff;
   cursor: pointer;
@@ -72,12 +74,12 @@ button {
   padding: 0.5rem 0.75rem;
 }
 button.secondary {
-  background: #fff;
-  color: #4c327d;
+  background: var(--spaarkudos-surface);
+  color: var(--spaarkudos-primary);
 }
 button.danger {
-  background: #a61b2b;
-  border-color: #a61b2b;
+  background: var(--spaarkudos-danger);
+  border-color: var(--spaarkudos-danger);
 }
 button:disabled {
   cursor: not-allowed;
@@ -90,18 +92,18 @@ button:disabled {
 }
 .item-list li {
   align-items: center;
-  border-top: 1px solid #e3e4ec;
+  border-top: 1px solid var(--spaarkudos-border);
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
 }
 .item-list span {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
   display: block;
   margin-top: 0.25rem;
 }
 .field-error {
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
 }
 @media (max-width: 38rem) {
   .item-list li,

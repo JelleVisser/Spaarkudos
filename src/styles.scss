@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@fontsource-variable/nunito-sans/wght.css';
+
+:root {
+  --spaarkudos-accent: #e3a323;
+  --spaarkudos-border: #e6e1ef;
+  --spaarkudos-canvas: #f8f6fc;
+  --spaarkudos-danger: #b42342;
+  --spaarkudos-ink: #25213f;
+  --spaarkudos-muted: #655f78;
+  --spaarkudos-primary: #6546ad;
+  --spaarkudos-primary-strong: #513695;
+  --spaarkudos-surface: #fff;
+  --spaarkudos-shadow: 0 0.9rem 2.6rem rgb(42 33 77 / 10%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--spaarkudos-canvas);
+}
+
+body {
+  color: var(--spaarkudos-ink);
+  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 450;
+  line-height: 1.5;
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgb(227 163 35 / 45%);
+  outline-offset: 2px;
+}

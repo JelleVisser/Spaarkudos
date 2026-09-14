@@ -1,20 +1,21 @@
 .child-management {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 2rem rgb(31 37 68 / 8%);
+  box-shadow: var(--spaarkudos-shadow);
   margin: 1.5rem auto 0;
   max-width: 65rem;
-  padding: 2rem;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
 }
 
 .section-heading h2,
 h3 {
-  color: #1f2544;
+  color: var(--spaarkudos-ink);
   margin: 0;
 }
 
 .eyebrow {
-  color: #6b46c1;
+  color: var(--spaarkudos-primary);
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
@@ -25,12 +26,12 @@ form {
 
 label,
 span {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
   display: block;
 }
 
 input {
-  border: 1px solid #a9acc0;
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 0.5rem;
   font: inherit;
   padding: 0.6rem 0.75rem;
@@ -42,6 +43,7 @@ input {
   display: flex;
   gap: 0.75rem;
   margin-top: 0.5rem;
+  align-items: center;
 }
 
 .add-child-row input {
@@ -49,8 +51,8 @@ input {
 }
 
 button {
-  background: #4c327d;
-  border: 1px solid #4c327d;
+  background: var(--spaarkudos-primary);
+  border: 1px solid var(--spaarkudos-primary);
   border-radius: 0.5rem;
   color: #fff;
   cursor: pointer;
@@ -65,8 +67,8 @@ button:disabled {
 }
 
 button.danger {
-  background: #a61b2b;
-  border-color: #a61b2b;
+  background: var(--spaarkudos-danger);
+  border-color: var(--spaarkudos-danger);
 }
 
 .member-list {
@@ -77,22 +79,22 @@ button.danger {
 
 .member-list li {
   align-items: center;
-  border-top: 1px solid #e3e4ec;
+  border-top: 1px solid var(--spaarkudos-border);
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
 }
 
 .empty-state {
-  color: #555b73;
+  color: var(--spaarkudos-muted);
 }
 
 .field-error {
-  color: #a61b2b;
+  color: var(--spaarkudos-danger);
 }
 
 .dialog {
-  background: rgb(31 37 68 / 45%);
+  background: rgb(37 33 63 / 48%);
   display: grid;
   inset: 0;
   padding: 1rem;
@@ -101,7 +103,8 @@ button.danger {
 }
 
 .dialog form {
-  background: #fff;
+  background: var(--spaarkudos-surface);
+  border: 1px solid var(--spaarkudos-border);
   border-radius: 1rem;
   margin: 0;
   max-width: 28rem;
