@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 import { Group } from '../../../core/groups/group';
 import { MemberService } from '../../../core/members/member';
@@ -32,6 +33,7 @@ describe('ChildManagement', () => {
     await TestBed.configureTestingModule({
       imports: [ChildManagement],
       providers: [
+        provideRouter([]),
         { provide: Group, useValue: groupService },
         { provide: MemberService, useValue: memberService },
       ],

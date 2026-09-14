@@ -1,0 +1,69 @@
+<main class="member-page">
+  <a routerLink="/dashboard">← Terug naar kinderen</a>
+
+  @if (member(); as child) {
+    <header>
+      <p class="eyebrow">Kinddashboard</p>
+      <h1>{{ child.name }}</h1>
+      <p class="balance">
+        <strong>{{ child.currentBalance }}</strong> kudos
+      </p>
+    </header>
+
+    <section class="card" aria-labelledby="adjustment-title">
+      <h2 id="adjustment-title">Kudos aanpassen</h2>
+      <p>Gebruik een positief aantal om toe te voegen en een negatief aantal om af te trekken.</p>
+      <form (submit)="addAdjustment(); $event.preventDefault()">
+        <label for="adjustment-amount">Aantal kudos</label>
+        <input id="adjustment-amount" type="number" [formField]="adjustmentForm.amount" />
+        @if (adjustmentForm.amount().touched() && adjustmentForm.amount().errors().length) {
+          <p class="field-error" role="alert">{{ adjustmentForm.amount().errors()[0].message }}</p>
+        }
+        <label for="adjustment-reason">Reden</label>
+        <input
+          id="adjustment-reason"
+          [formField]="adjustmentForm.reason"
+          placeholder="Bijvoorbeeld: geholpen met opruimen"
+        />
+        @if (adjustmentForm.reason().touched() && adjustmentForm.reason().errors().length) {
+          <p class="field-error" role="alert">{{ adjustmentForm.reason().errors()[0].message }}</p>
+        }
+        <button type="submit" [disabled]="adjustmentForm().invalid() || saving()">
+          Aanpassing opslaan
+        </button>
+      </form>
+      @if (errorMessage(); as error) {
+        <p class="field-error" role="alert">{{ error }}</p>
+      }
+    </section>
+
+    <section class="card" aria-labelledby="chart-title">
+      <h2 id="chart-title">Saldoontwikkeling</h2>
+      <app-balance-chart [transactions]="transactions()" />
+    </section>
+
+    <section class="card" aria-labelledby="ledger-title">
+      <h2 id="ledger-title">Transactiegeschiedenis</h2>
+      @if (transactionsLoading()) {
+        <p>Transacties worden geladen...</p>
+      } @else if (transactionError(); as error) {
+        <p class="field-error" role="alert">{{ error }}</p>
+      } @else {
+        <ul class="ledger">
+          @for (transaction of transactionRows(); track transaction.id) {
+            <li>
+              <span>{{ transaction.reason }}</span>
+              <strong [class.negative]="transaction.amount < 0">
+                {{ transaction.amount > 0 ? '+' : '' }}{{ transaction.amount }} kudos
+              </strong>
+            </li>
+          } @empty {
+            <li>Er zijn nog geen transacties.</li>
+          }
+        </ul>
+      }
+    </section>
+  } @else {
+    <p>Kind wordt geladen...</p>
+  }
+</main>

@@ -13,7 +13,7 @@
     "format:check": "prettier --check .",
     "emulators": "firebase emulators:start --project demo-spaarkudos",
     "emulators:export": "firebase emulators:export .firebase-emulator-data --project demo-spaarkudos",
-    "test:rules": "firebase emulators:exec --project demo-spaarkudos --only auth,firestore \"npm run test:rules:run\"",
+    "test:rules": "firebase emulators:exec --config firebase.rules-test.json --project demo-spaarkudos --only auth,firestore \"npm run test:rules:run\"",
     "test:rules:run": "vitest run tests/rules",
     "prepare": "husky"
   },
@@ -33,6 +33,7 @@
     "@angular/forms": "^22.1.0",
     "@angular/platform-browser": "^22.1.0",
     "@angular/router": "^22.1.0",
+    "chart.js": "^4.5.1",
     "firebase": "^12.19.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

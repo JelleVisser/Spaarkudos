@@ -83,6 +83,21 @@ export class MemberService {
     await deleteDoc(doc(this.firestore, 'groups', groupId, 'members', memberId));
   }
 
+  watchMember(
+    groupId: string,
+    memberId: string,
+    onMember: (member: IMember | null) => void,
+    onError: () => void,
+  ): Unsubscribe {
+    return onSnapshot(
+      doc(this.firestore, 'groups', groupId, 'members', memberId),
+      (snapshot) => {
+        onMember(snapshot.exists() ? ({ id: snapshot.id, ...snapshot.data() } as IMember) : null);
+      },
+      onError,
+    );
+  }
+
   private cleanName(name: string): string {
     return name.trim();
   }

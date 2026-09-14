@@ -41,6 +41,7 @@
             <span>{{ member.currentBalance }} kudos</span>
           </div>
           <div class="member-actions">
+            <a [routerLink]="['/dashboard/member', member.id]">Bekijk saldo</a>
             <button type="button" (click)="startEditing(member)">Naam wijzigen</button>
             <button type="button" class="danger" (click)="startDeleting(member)">
               Verwijderen

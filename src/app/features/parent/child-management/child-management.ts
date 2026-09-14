@@ -1,10 +1,11 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormField, form, required, submit } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 import { Group } from '../../../core/groups/group';
 import { IMember, MemberService } from '../../../core/members/member';
 
 @Component({
-  imports: [FormField],
+  imports: [FormField, RouterLink],
   selector: 'app-child-management',
   styleUrl: './child-management.scss',
   templateUrl: './child-management.html',

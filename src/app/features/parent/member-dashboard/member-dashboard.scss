@@ -1,0 +1,94 @@
+.member-page {
+  background: #f7f7fb;
+  min-height: 100dvh;
+  padding: 1.5rem;
+}
+
+.member-page > a,
+header,
+.card {
+  display: block;
+  margin: 0 auto;
+  max-width: 48rem;
+}
+
+.member-page > a {
+  color: #4c327d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+header,
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 2rem rgb(31 37 68 / 8%);
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+}
+
+.eyebrow {
+  color: #6b46c1;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+h1,
+h2 {
+  color: #1f2544;
+  margin: 0;
+}
+
+.balance {
+  color: #555b73;
+  font-size: 1.25rem;
+}
+
+.balance strong {
+  color: #4c327d;
+  font-size: 2rem;
+}
+
+form {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+input {
+  border: 1px solid #a9acc0;
+  border-radius: 0.5rem;
+  font: inherit;
+  padding: 0.6rem 0.75rem;
+}
+
+button {
+  background: #4c327d;
+  border: 0;
+  border-radius: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  justify-self: start;
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.field-error,
+.negative {
+  color: #a61b2b;
+}
+
+.ledger {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.ledger li {
+  border-top: 1px solid #e3e4ec;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+}

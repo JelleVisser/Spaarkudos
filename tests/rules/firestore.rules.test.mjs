@@ -1,11 +1,11 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import {
   assertFails,
   assertSucceeds,
   initializeTestEnvironment,
 } from '@firebase/rules-unit-testing';
-import { deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, runTransaction, setDoc, updateDoc } from 'firebase/firestore';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 
 const projectId = 'demo-spaarkudos';
@@ -120,6 +120,60 @@ describe('Firestore owner access rules', () => {
     await assertFails(
       updateDoc(doc(otherParent, 'groups', groupId, 'members', 'child'), { name: 'Ongewenst' }),
     );
+  });
+
+  it('allows only the group owner to create ledger transactions', async () => {
+    await createGroup();
+    const owner = testEnvironment.authenticatedContext(ownerUid).firestore();
+    const otherParent = testEnvironment.authenticatedContext('another-parent').firestore();
+    const transaction = {
+      id: 'transaction-1',
+      memberId: 'child',
+      amount: 5,
+      reason: 'Geholpen met opruimen',
+      type: 'manual',
+    };
+
+    await assertSucceeds(
+      setDoc(doc(owner, 'groups', groupId, 'transactions', 'transaction-1'), transaction),
+    );
+    await assertFails(
+      setDoc(doc(otherParent, 'groups', groupId, 'transactions', 'transaction-2'), transaction),
+    );
+  });
+
+  it('allows the owner to atomically adjust a balance and create a ledger entry', async () => {
+    await createGroup();
+    const owner = testEnvironment.authenticatedContext(ownerUid).firestore();
+    const member = doc(owner, 'groups', groupId, 'members', 'child');
+    const transaction = doc(owner, 'groups', groupId, 'transactions', 'transaction-1');
+    await setDoc(member, {
+      id: 'child',
+      name: 'Kind',
+      currentBalance: 2,
+      periodicReward: null,
+    });
+
+    await assertSucceeds(
+      runTransaction(owner, async (firestoreTransaction) => {
+        const memberSnapshot = await firestoreTransaction.get(member);
+        firestoreTransaction.update(member, {
+          currentBalance: memberSnapshot.data().currentBalance + 3,
+        });
+        firestoreTransaction.set(transaction, {
+          id: 'transaction-1',
+          memberId: 'child',
+          amount: 3,
+          reason: 'Geholpen met opruimen',
+          type: 'manual',
+        });
+      }),
+    );
+
+    const updatedMember = await getDoc(member);
+    const createdTransaction = await getDoc(transaction);
+    expect(updatedMember.data().currentBalance).toBe(5);
+    expect(createdTransaction.data().amount).toBe(3);
   });
 
   it('denies unauthenticated direct Firestore reads', async () => {
