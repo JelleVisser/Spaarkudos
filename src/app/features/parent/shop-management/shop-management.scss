@@ -1,10 +1,10 @@
-.member-page {
+.shop-page {
   background: #f7f7fb;
   min-height: 100dvh;
   padding: 1.5rem;
 }
 
-.member-page > a,
+.shop-page > a,
 header,
 .card {
   display: block;
@@ -12,7 +12,7 @@ header,
   max-width: 48rem;
 }
 
-.member-page > a {
+.shop-page > a {
   color: #4c327d;
   font-weight: 700;
   text-decoration: none;
@@ -32,67 +32,81 @@ header,
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
-
 h1,
 h2 {
   color: #1f2544;
   margin: 0;
 }
-
-.balance {
-  color: #555b73;
-  font-size: 1.25rem;
-}
-
-.balance strong {
-  color: #4c327d;
-  font-size: 2rem;
-}
-
 form {
   display: grid;
   gap: 0.5rem;
   margin-top: 1rem;
 }
-
 input {
   border: 1px solid #a9acc0;
   border-radius: 0.5rem;
   font: inherit;
   padding: 0.6rem 0.75rem;
 }
-
+.checkbox-label {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+.checkbox-label input {
+  width: auto;
+}
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
 button {
   background: #4c327d;
-  border: 0;
+  border: 1px solid #4c327d;
   border-radius: 0.5rem;
   color: #fff;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
-  justify-self: start;
-  margin-top: 0.5rem;
-  padding: 0.6rem 0.75rem;
+  padding: 0.5rem 0.75rem;
 }
-
-.field-error,
-.negative {
-  color: #a61b2b;
+button.secondary {
+  background: #fff;
+  color: #4c327d;
 }
-
-.ledger {
+button.danger {
+  background: #a61b2b;
+  border-color: #a61b2b;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.item-list {
   list-style: none;
   margin: 1rem 0 0;
   padding: 0;
 }
-
-.ledger li {
+.item-list li {
+  align-items: center;
   border-top: 1px solid #e3e4ec;
   display: flex;
   justify-content: space-between;
-  padding: 0.8rem 0;
+  padding: 1rem 0;
 }
-
-.ledger button {
-  margin: 0;
+.item-list span {
+  color: #555b73;
+  display: block;
+  margin-top: 0.25rem;
+}
+.field-error {
+  color: #a61b2b;
+}
+@media (max-width: 38rem) {
+  .item-list li,
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }

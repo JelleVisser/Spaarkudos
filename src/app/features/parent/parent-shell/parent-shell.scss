@@ -16,6 +16,17 @@
   justify-content: space-between;
 }
 
+.header-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.header-actions a {
+  color: #4c327d;
+  font-weight: 700;
+}
+
 .brand {
   color: #4c327d;
   font-size: 1.25rem;

@@ -17,6 +17,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'dashboard/shop',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/parent/shop-management/shop-management').then(
+        (module) => module.ShopManagement,
+      ),
+  },
+  {
     path: 'dashboard',
     canActivate: [authGuard],
     loadComponent: () =>

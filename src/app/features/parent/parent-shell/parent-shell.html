@@ -1,7 +1,10 @@
 <main class="parent-page">
   <header class="page-header">
     <a class="brand" routerLink="/dashboard">Spaarkudos</a>
-    <button type="button" (click)="signOut()">Uitloggen</button>
+    <div class="header-actions">
+      <a routerLink="/dashboard/shop">Shop beheren</a>
+      <button type="button" (click)="signOut()">Uitloggen</button>
+    </div>
   </header>
 
   <section class="welcome-card" aria-labelledby="welcome-title">

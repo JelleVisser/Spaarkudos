@@ -63,6 +63,39 @@
         </ul>
       }
     </section>
+
+    <section class="card" aria-labelledby="fulfillment-title">
+      <h2 id="fulfillment-title">Aankoop verwerken</h2>
+      <p>Selecteer het artikel dat {{ child.name }} heeft gevraagd.</p>
+      @if (fulfillmentErrorMessage(); as error) {
+        <p class="field-error" role="alert">{{ error }}</p>
+      }
+      @if (shopLoading()) {
+        <p>Shopartikelen worden geladen...</p>
+      } @else {
+        <ul class="ledger">
+          @for (item of shopItems(); track item.id) {
+            <li>
+              <span>
+                {{ item.description }} · {{ item.cost }} kudos
+                @if (item.stock !== null) {
+                  · {{ item.stock }} op voorraad
+                }
+              </span>
+              <button
+                type="button"
+                (click)="fulfill(item)"
+                [disabled]="item.stock === 0 || fulfilling() === item.id"
+              >
+                {{ item.stock === 0 ? 'Uitverkocht' : 'Vervullen' }}
+              </button>
+            </li>
+          } @empty {
+            <li>Er zijn nog geen shopartikelen.</li>
+          }
+        </ul>
+      }
+    </section>
   } @else {
     <p>Kind wordt geladen...</p>
   }

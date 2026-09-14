@@ -142,6 +142,23 @@ describe('Firestore owner access rules', () => {
     );
   });
 
+  it('allows only the group owner to manage shop items', async () => {
+    await createGroup();
+    const owner = testEnvironment.authenticatedContext(ownerUid).firestore();
+    const otherParent = testEnvironment.authenticatedContext('another-parent').firestore();
+    const item = {
+      id: 'shop-item-1',
+      description: 'Filmavond',
+      cost: 5,
+      stock: 1,
+    };
+
+    await assertSucceeds(setDoc(doc(owner, 'groups', groupId, 'shopItems', 'shop-item-1'), item));
+    await assertFails(
+      updateDoc(doc(otherParent, 'groups', groupId, 'shopItems', 'shop-item-1'), { stock: 0 }),
+    );
+  });
+
   it('allows the owner to atomically adjust a balance and create a ledger entry', async () => {
     await createGroup();
     const owner = testEnvironment.authenticatedContext(ownerUid).firestore();

@@ -1,0 +1,71 @@
+<main class="shop-page">
+  <a routerLink="/dashboard">← Terug naar dashboard</a>
+  <header>
+    <p class="eyebrow">Familiewinkel</p>
+    <h1>Shop beheren</h1>
+  </header>
+
+  <section class="card" aria-labelledby="item-form-title">
+    <h2 id="item-form-title">{{ editing() ? 'Shopartikel wijzigen' : 'Nieuw shopartikel' }}</h2>
+    <form (submit)="saveItem(); $event.preventDefault()">
+      <label for="item-description">Omschrijving</label>
+      <input
+        id="item-description"
+        [formField]="itemForm.description"
+        placeholder="Bijvoorbeeld: Samen naar de speeltuin"
+      />
+      <label for="item-cost">Kosten in kudos</label>
+      <input id="item-cost" type="number" [formField]="itemForm.cost" />
+      <label class="checkbox-label" for="item-unlimited-stock">
+        <input id="item-unlimited-stock" type="checkbox" [formField]="itemForm.unlimitedStock" />
+        Onbeperkte voorraad
+      </label>
+      <label for="item-stock">Voorraad</label>
+      <input id="item-stock" type="number" [formField]="itemForm.stock" />
+      @if (itemForm().touched() && itemForm().errors().length) {
+        <p class="field-error" role="alert">{{ itemForm().errors()[0].message }}</p>
+      }
+      <div class="actions">
+        @if (editing()) {
+          <button type="button" class="secondary" (click)="closeEditor()">Annuleren</button>
+        }
+        <button type="submit" [disabled]="itemForm().invalid() || saving()">
+          {{ editing() ? 'Wijzigingen opslaan' : 'Artikel toevoegen' }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" aria-labelledby="items-title">
+    <h2 id="items-title">Beschikbare artikelen</h2>
+    @if (errorMessage(); as error) {
+      <p class="field-error" role="alert">{{ error }}</p>
+    }
+    @if (loadError(); as error) {
+      <p class="field-error" role="alert">{{ error }}</p>
+    }
+    @if (isLoading()) {
+      <p>Artikelen worden geladen...</p>
+    } @else {
+      <ul class="item-list">
+        @for (item of items(); track item.id) {
+          <li>
+            <div>
+              <strong>{{ item.description }}</strong>
+              <span
+                >{{ item.cost }} kudos ·
+                {{ item.stock === null ? 'Onbeperkt' : item.stock + ' op voorraad' }}</span
+              >
+            </div>
+            <div class="actions">
+              <button type="button" class="secondary" (click)="startEditing(item)">Wijzigen</button>
+              <button type="button" class="danger" (click)="deleteItem(item)">Verwijderen</button>
+            </div>
+          </li>
+        } @empty {
+          <li>Nog geen shopartikelen.</li>
+        }
+      </ul>
+    }
+  </section>
+</main>
