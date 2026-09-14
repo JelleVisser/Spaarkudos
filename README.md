@@ -2,7 +2,7 @@
 
 Spaarkudos is a mobile-first family rewards application. Parents award virtual currency (**kudos**) to their children for positive behaviour; children can track their balance and choose rewards from a family shop.
 
-> **Project status:** Milestone 3 complete: Firebase authentication and first-group creation. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
+> **Project status:** Milestone 4 complete: parent dashboard and child management. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
 
 ## Planned MVP
 

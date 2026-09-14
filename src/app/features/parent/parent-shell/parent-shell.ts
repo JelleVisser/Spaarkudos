@@ -1,9 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth';
+import { ChildManagement } from '../child-management/child-management';
 
 @Component({
-  imports: [RouterLink],
+  imports: [ChildManagement, RouterLink],
   selector: 'app-parent-shell',
   styleUrl: './parent-shell.scss',
   templateUrl: './parent-shell.html',

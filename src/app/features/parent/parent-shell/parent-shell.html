@@ -11,13 +11,15 @@
     @if (isCreatingInitialGroup()) {
       <p aria-live="polite">Je familiegroep wordt voorbereid...</p>
     } @else {
-      <p>
-        Je familiegroep is klaar. In de volgende stap voegen we kinderen en jullie dashboard toe.
-      </p>
+      <p>Beheer hier jullie familiegroep en kinderen.</p>
     }
 
     @if (errorMessage(); as error) {
       <p class="error-message" role="alert">{{ error }}</p>
     }
   </section>
+
+  @if (!isCreatingInitialGroup()) {
+    <app-child-management />
+  }
 </main>

@@ -5,7 +5,7 @@ import {
   assertSucceeds,
   initializeTestEnvironment,
 } from '@firebase/rules-unit-testing';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 
 const projectId = 'demo-spaarkudos';
@@ -86,6 +86,40 @@ describe('Firestore owner access rules', () => {
     await expect(
       assertFails(getDoc(doc(otherParent, 'groups', groupId, 'members', 'child'))),
     ).resolves.toBeDefined();
+  });
+
+  it('allows the group owner to create, rename, and delete a member', async () => {
+    await createGroup();
+    const owner = testEnvironment.authenticatedContext(ownerUid).firestore();
+    const member = doc(owner, 'groups', groupId, 'members', 'child');
+
+    await assertSucceeds(
+      setDoc(member, {
+        id: 'child',
+        name: 'Kind',
+        currentBalance: 0,
+        periodicReward: null,
+      }),
+    );
+    await assertSucceeds(updateDoc(member, { name: 'Nieuwe naam' }));
+    await assertSucceeds(deleteDoc(member));
+  });
+
+  it('prevents another parent from changing a member', async () => {
+    await createGroup();
+    await testEnvironment.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), 'groups', groupId, 'members', 'child'), {
+        id: 'child',
+        name: 'Kind',
+        currentBalance: 0,
+        periodicReward: null,
+      });
+    });
+    const otherParent = testEnvironment.authenticatedContext('another-parent').firestore();
+
+    await assertFails(
+      updateDoc(doc(otherParent, 'groups', groupId, 'members', 'child'), { name: 'Ongewenst' }),
+    );
   });
 
   it('denies unauthenticated direct Firestore reads', async () => {

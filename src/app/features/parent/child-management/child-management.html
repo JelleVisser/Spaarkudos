@@ -1,0 +1,96 @@
+<section class="child-management" aria-labelledby="children-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{{ group()?.name ?? 'Familiegroep' }}</p>
+      <h2 id="children-title">Kinderen</h2>
+    </div>
+  </div>
+
+  <form (submit)="addChild(); $event.preventDefault()">
+    <label for="new-child-name">Nieuw kind</label>
+    <div class="add-child-row">
+      <input
+        id="new-child-name"
+        [formField]="newChildForm.name"
+        placeholder="Bijvoorbeeld: Sam 🎨"
+      />
+      <button type="submit" [disabled]="newChildForm().invalid() || saving()">
+        Kind toevoegen
+      </button>
+    </div>
+    @if (newChildForm.name().touched() && newChildForm.name().errors().length) {
+      <p class="field-error" role="alert">{{ newChildForm.name().errors()[0].message }}</p>
+    }
+  </form>
+
+  @if (errorMessage(); as error) {
+    <p class="field-error" role="alert">{{ error }}</p>
+  }
+  @if (loadError(); as error) {
+    <p class="field-error" role="alert">{{ error }}</p>
+  }
+
+  @if (isLoading()) {
+    <p aria-live="polite">Kinderen worden geladen...</p>
+  } @else {
+    <ul class="member-list">
+      @for (member of members(); track member.id) {
+        <li>
+          <div>
+            <strong>{{ member.name }}</strong>
+            <span>{{ member.currentBalance }} kudos</span>
+          </div>
+          <div class="member-actions">
+            <button type="button" (click)="startEditing(member)">Naam wijzigen</button>
+            <button type="button" class="danger" (click)="startDeleting(member)">
+              Verwijderen
+            </button>
+          </div>
+        </li>
+      } @empty {
+        <li class="empty-state">Voeg jullie eerste kind toe.</li>
+      }
+    </ul>
+  }
+
+  @if (editingMember(); as member) {
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+      <form (submit)="saveEdit(); $event.preventDefault()">
+        <h3 id="edit-title">Naam wijzigen</h3>
+        <label for="edit-child-name">Nieuwe naam voor {{ member.name }}</label>
+        <input id="edit-child-name" [formField]="editForm.name" />
+        @if (editForm.name().touched() && editForm.name().errors().length) {
+          <p class="field-error" role="alert">{{ editForm.name().errors()[0].message }}</p>
+        }
+        <div class="dialog-actions">
+          <button type="button" (click)="closeDialog()">Annuleren</button>
+          <button type="submit" [disabled]="editForm().invalid() || saving()">Opslaan</button>
+        </div>
+      </form>
+    </section>
+  }
+
+  @if (deletingMember(); as member) {
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+      <form (submit)="deleteChild(); $event.preventDefault()">
+        <h3 id="delete-title">{{ member.name }} verwijderen?</h3>
+        <p>
+          Typ <strong>{{ member.name }}</strong> om dit te bevestigen.
+        </p>
+        <label for="delete-confirmation">Naam ter bevestiging</label>
+        <input id="delete-confirmation" [formField]="deleteForm.confirmation" />
+        @if (deleteForm.confirmation().touched() && deleteForm.confirmation().errors().length) {
+          <p class="field-error" role="alert">
+            {{ deleteForm.confirmation().errors()[0].message }}
+          </p>
+        }
+        <div class="dialog-actions">
+          <button type="button" (click)="closeDialog()">Annuleren</button>
+          <button type="submit" class="danger" [disabled]="deleteForm().invalid() || saving()">
+            Definitief verwijderen
+          </button>
+        </div>
+      </form>
+    </section>
+  }
+</section>

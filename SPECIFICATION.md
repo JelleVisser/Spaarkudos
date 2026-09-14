@@ -74,7 +74,7 @@ Spaarkudos is a mobile-first family rewards web application. Parents award virtu
 ### `groups/{groupId}`
 
 ```ts
-interface Group {
+interface IGroup {
   id: string;
   name: string;
   createdBy: string;
@@ -85,7 +85,7 @@ interface Group {
 ### `groups/{groupId}/members/{memberId}`
 
 ```ts
-interface Member {
+interface IMember {
   id: string;
   name: string;
   currentBalance: number;
@@ -101,7 +101,7 @@ interface Member {
 ### `groups/{groupId}/shopItems/{shopItemId}`
 
 ```ts
-interface ShopItem {
+interface IShopItem {
   id: string;
   description: string;
   cost: number;
@@ -113,7 +113,7 @@ interface ShopItem {
 ### `groups/{groupId}/transactions/{transactionId}`
 
 ```ts
-interface Transaction {
+interface ITransaction {
   id: string;
   memberId: string;
   amount: number; // positive for rewards, negative for deductions or purchases

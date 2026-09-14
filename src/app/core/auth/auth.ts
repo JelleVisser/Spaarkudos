@@ -34,11 +34,11 @@ export class AuthService {
     this.initializationPromise = new Promise((resolve) => {
       const unsubscribe = onAuthStateChanged(
         this.auth,
-        (user) => {
+        async (user) => {
           this.currentUser.set(user);
 
           if (user) {
-            void this.createInitialGroup(user);
+            await this.createInitialGroup(user);
           } else {
             this.creatingInitialGroup.set(false);
           }
