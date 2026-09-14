@@ -44,6 +44,16 @@ firebase-debug.log
 firestore-debug.log
 .firebase-emulator-data/
 
+# Local Firebase configuration and credentials
+.env
+.env.*
+!.env.example
+.firebaserc.local
+src/environments/environment.local.ts
+service-account*.json
+*-firebase-adminsdk-*.json
+.firebase
+
 # System files
 .DS_Store
 Thumbs.db

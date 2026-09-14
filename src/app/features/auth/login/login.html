@@ -1,0 +1,17 @@
+<main class="login-page">
+  <section class="login-card" aria-labelledby="login-title">
+    <p class="eyebrow">Spaarkudos</p>
+    <h1 id="login-title">Samen sparen, samen kiezen</h1>
+    <p class="intro">Meld je aan als ouder om jullie familiegroep te beheren.</p>
+
+    @if (errorMessage(); as error) {
+      <p class="error-message" role="alert">{{ error }}</p>
+    }
+
+    <div class="sign-in-actions">
+      <button type="button" [disabled]="isLoading()" (click)="signIn()">Doorgaan met Google</button>
+    </div>
+
+    <p class="help-text">Alleen ouders kunnen hier inloggen.</p>
+  </section>
+</main>

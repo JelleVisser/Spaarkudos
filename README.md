@@ -2,11 +2,11 @@
 
 Spaarkudos is a mobile-first family rewards application. Parents award virtual currency (**kudos**) to their children for positive behaviour; children can track their balance and choose rewards from a family shop.
 
-> **Project status:** Milestone 2 complete: Angular workspace, developer tooling, and Firebase foundation. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
+> **Project status:** Milestone 3 complete: Firebase authentication and first-group creation. The MVP is being built (_cough_ vibe-coded) incrementally, with each milestone reviewed before the next begins.
 
 ## Planned MVP
 
-- Parent login with Google or Facebook via Firebase Authentication.
+- Parent login with Google via Firebase Authentication.
 - Automatic creation of a first family group named `Familie naam`.
 - Add and remove children, including per-child balances and transaction history.
 - Manual and scheduled kudos rewards.
@@ -71,6 +71,15 @@ npm run build
 
 Real Firebase credentials are intentionally not committed. Production placeholders are in `src/environments/environment.ts` and `.firebaserc`; replace them only when a Firebase project has been created.
 
+For local testing against a real Firebase project, copy the ignored example file and replace its placeholders:
+
+```powershell
+Copy-Item src\environments\environment.local.example.ts src\environments\environment.local.ts
+npm run start:local
+```
+
+`environment.local.ts`, `.env` files, Firebase service-account JSON files, and local `.firebaserc` overrides are ignored by Git. Keep all credentials in Firebase or Google Cloud configuration.
+
 The local Firebase Emulator Suite uses the safe `demo-spaarkudos` project, which cannot access live Firebase resources:
 
 ```bash
@@ -86,10 +95,12 @@ The TypeScript Cloud Functions workspace is in `functions/`. Build it with:
 npm --prefix functions run build
 ```
 
+To use Google sign-in outside the emulators, replace the Firebase placeholders and enable Google in the Firebase Authentication console. The first successful parent sign-in automatically creates a `Familie naam` group owned by that parent.
+
 A later milestone will provide the complete Firebase project setup and deployment instructions for:
 
 - Creating a Firebase project
-- Enabling Google and Facebook providers
+- Enabling Google authentication
 - Configuring local environment values
 - Running the Firebase Emulator Suite
 - Deploying Rules, Functions, and Hosting

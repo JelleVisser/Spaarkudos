@@ -8,7 +8,7 @@ Spaarkudos is a mobile-first family rewards web application. Parents award virtu
 
 - Frontend: Angular (latest stable version), TypeScript, WebAwesome, Chart.js, and canvas-confetti.
 - Backend: Firebase Authentication, Cloud Firestore, and TypeScript Firebase Cloud Functions.
-- Authentication providers: Google and Facebook OAuth.
+- Authentication provider: Google OAuth.
 - All source code, database field names, comments, and architecture are in English.
 - All user-facing application text is in Dutch.
 - The application is responsive and designed mobile-first.
@@ -17,7 +17,7 @@ Spaarkudos is a mobile-first family rewards web application. Parents award virtu
 
 ### Parent
 
-- Parents must authenticate with Google or Facebook before accessing management features.
+- Parents must authenticate with Google before accessing management features.
 - The authenticated creator of a group is its only owner and manager. Shared parent management is out of scope.
 - On a parent's first successful sign-in, the application creates one group named `Familie naam`.
 - A parent can access only groups they created.
@@ -144,7 +144,7 @@ interface Transaction {
 ## Firebase configuration and deployment
 
 - The repository must include placeholder Firebase environment configuration rather than a real project identifier or credentials.
-- Deployment documentation must give clear, concise steps to create a Firebase project, enable Google and Facebook authentication, configure the Angular environment placeholders, deploy Firestore rules and indexes, deploy Cloud Functions, and deploy the web application.
+- Deployment documentation must give clear, concise steps to create a Firebase project, enable Google authentication, configure the Angular environment placeholders, deploy Firestore rules and indexes, deploy Cloud Functions, and deploy the web application.
 
 ## Implementation workflow
 
